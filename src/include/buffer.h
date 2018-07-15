@@ -360,13 +360,15 @@ namespace buffer CEPH_BUFFER_API {
 
   class CEPH_BUFFER_API list {
     // my private bits
-    std::list<ptr> _buffers;
-    unsigned _len;
+    std::list<ptr> _buffers;  //所有的ptr
+    unsigned _len;  //所有的ptr数据总长度
     unsigned _memcopy_count; //the total of memcopy using rebuild().
+    /* 当调用函数rebuild用来内存对齐时,需要内存拷贝的数据量*/
     ptr append_buffer;  // where i put small appends.
+    /* 当有小的数据就添加到这个buffer里 */
 
   public:
-    class iterator;
+    class iterator;  //访问list的迭代器
 
   private:
     template <bool is_const>
@@ -752,6 +754,8 @@ namespace buffer CEPH_BUFFER_API {
       last_p = begin();
       append_buffer = ptr();
     }
+
+	/* 添加一个ptr到list的头部 */
     void push_front(ptr& bp) {
       if (bp.length() == 0)
 	return;
@@ -764,6 +768,8 @@ namespace buffer CEPH_BUFFER_API {
       _len += bp.length();
       _buffers.push_front(std::move(bp));
     }
+
+	/* 添加一个raw到list头部,先构造一个ptr,然后添加到list中 */
     void push_front(raw *r) {
       push_front(ptr(r));
     }
