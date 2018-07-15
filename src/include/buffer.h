@@ -175,9 +175,10 @@ namespace buffer CEPH_BUFFER_API {
   /*
    * a buffer pointer.  references (a subsequence of) a raw buffer.
    */
+  /* 类buffer::ptr就是对于buffer::raw的一个数据段 */
   class CEPH_BUFFER_API ptr {
-    raw *_raw;
-    unsigned _off, _len;
+    raw *_raw;  //ptr是raw里的一个任意的数据段
+    unsigned _off, _len;  //_off是在_raw里的偏移量,_len是ptr的长度
 
     void release();
 
