@@ -87,7 +87,7 @@ struct crush_rule_mask {
 	__u8 min_size;
 	__u8 max_size;
 };
-/* CRUSH 规则 */
+
 struct crush_rule {
 	__u32 len;
 	struct crush_rule_mask mask;
