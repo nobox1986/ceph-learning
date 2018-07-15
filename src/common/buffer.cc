@@ -166,17 +166,28 @@ using namespace ceph;
   buffer::error_code::error_code(int error) :
     buffer::malformed_input(cpp_strerror(error).c_str()), code(error) {}
 
+  /* 类buffer::raw是一个原始的数据Buffer,在其基础上添加了长度、引用计数和额外的crc校验信息 */
   class buffer::raw {
   public:
-    char *data;
-    unsigned len;
-    std::atomic<unsigned> nref { 0 };
+    char *data;  //数据指针
+    unsigned len;  //数据长度
+    std::atomic<unsigned> nref { 0 };  //引用计数
     int mempool;
 
     std::pair<size_t, size_t> last_crc_offset {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max()};
+	/*crc校验信息，表示数据段的偏移位置，即起始位置和最终位置
+	**原来的定义是这样的：
+	**map<pair<size_t, size_t>,pair<uint32_t, uint32_t>> crc_map;
+	*/
     std::pair<uint32_t, uint32_t> last_crc_val;
+	/*crc校验码,pair第一个字段为base crc32校验码
+	**第二个字段为加上数据段后计算出的crc32校验码
+	*/
 
-    mutable ceph::spinlock crc_spinlock;
+    mutable ceph::spinlock crc_spinlock;  
+	/*自旋锁,以前是读写锁:
+	**mutable RWLOCK crc_lock;
+	*/
 
     explicit raw(unsigned l, int mempool=mempool::mempool_buffer_anon)
       : data(NULL), len(l), nref(0), mempool(mempool) {
@@ -322,6 +333,7 @@ public:
     }
   };
 
+  /* 类raw_maloc调用malloc函数分配内存空间 */
   class buffer::raw_malloc : public buffer::raw {
   public:
     MEMPOOL_CLASS_HELPERS();
@@ -353,6 +365,7 @@ public:
   };
 
 #ifndef __CYGWIN__
+  /* 类buffer::raw_mmap_pages调用mmap把内存映射到用户态的进程地址空间 */
   class buffer::raw_mmap_pages : public buffer::raw {
   public:
     MEMPOOL_CLASS_HELPERS();
@@ -375,6 +388,7 @@ public:
     }
   };
 
+  /* 类buffer::raw_posix_aligned调用函数posix_memalign申请内存地址对其的内存空间 */
   class buffer::raw_posix_aligned : public buffer::raw {
     unsigned align;
   public:
@@ -408,6 +422,7 @@ public:
 #endif
 
 #ifdef __CYGWIN__
+  /* 类buffer::raw_hack_aligned是在文件不支持内存对齐申请的情况下自己实现的内存地址的对齐 */
   class buffer::raw_hack_aligned : public buffer::raw {
     unsigned align;
     char *realdata;
@@ -438,6 +453,7 @@ public:
 #endif
 
 #ifdef CEPH_HAVE_SPLICE
+  /* 类buffer::raw_pipe实现了pipe作为Buffer的内存空间 */
   class buffer::raw_pipe : public buffer::raw {
   public:
     MEMPOOL_CLASS_HELPERS();
@@ -617,6 +633,7 @@ public:
   /*
    * primitive buffer types
    */
+  /* 类buffer::raw_char调用new申请内存空间 */ 
   class buffer::raw_char : public buffer::raw {
   public:
     MEMPOOL_CLASS_HELPERS();

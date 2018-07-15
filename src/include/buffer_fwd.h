@@ -3,6 +3,7 @@
 
 namespace ceph {
   namespace buffer {
+  /* 命名空间,在该命名空间下定义了Buffer相关的数据结构 */
     class ptr;
     class list;
     class hash;
