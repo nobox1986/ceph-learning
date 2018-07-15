@@ -1,0 +1,10 @@
+overrides:
+  ceph:
+    conf:
+      global:
+        ms inject socket failures: 1000
+overrides:
+  ceph:
+    log-whitelist:
+      - \(MGR_DOWN\)
+      - No standby daemons
