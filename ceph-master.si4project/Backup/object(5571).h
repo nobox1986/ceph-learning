@@ -31,7 +31,6 @@
 
 using namespace std;
 
-/* 对象Object是默认大小为4M数据块,一个对象对应的本地文件系统中的一个文件*/
 struct object_t {
   string name;
 
@@ -153,10 +152,10 @@ inline ostream& operator<<(ostream& out, const snapid_t& s) {
     return out << hex << s.val << dec;
 }
 
-/* 在object_t基础上增加了快照snapshot信息,用于标识是否为快照对象(sobject_t=snapshot object_t)*/
+
 struct sobject_t {
   object_t oid;
-  snapid_t snap;//快照对象对应的快照序号，如果一个对象不是快照对象,那么snap字段就设置为CEPH_NOSNAP
+  snapid_t snap;
 
   sobject_t() : snap(0) {}
   sobject_t(object_t o, snapid_t s) : oid(o), snap(s) {}

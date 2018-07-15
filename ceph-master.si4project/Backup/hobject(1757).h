@@ -34,7 +34,6 @@ namespace ceph {
 #define INT64_MIN ((int64_t)0x8000000000000000ll)
 #endif
 
-/* hobject_t=hash object 哈希对象,在sobject_t基础上增加一些字段 */
 struct hobject_t {
   object_t oid;
   snapid_t snap;
@@ -47,11 +46,11 @@ private:
   static const int64_t POOL_TEMP_START = -2; // and then negative
   friend class spg_t;  // for POOL_TEMP_START
 public:
-  int64_t pool;  //所在pool的id
-  string nspace;  //nspace一般为空,用于标识特殊的对象
+  int64_t pool;
+  string nspace;
 
 private:
-  string key;  //对象的特殊标记
+  string key;
 
   class hobject_t_max {};
 
@@ -353,19 +352,10 @@ static inline int cmp(const T&, const hobject_t&r) {
 
 typedef version_t gen_t;
 
-/* 在hobject_t基础上增加了generation字段和shard_id字段 */
 struct ghobject_t {
   hobject_t hobj;
   gen_t generation;
-  /*用于记录对象的版本号
-  **当PG为EC时,写操作需要区分斜前后两个版本的object，写操作保存对象的上一个版本(generation)对象
-  **当EC写失败是，可以roolback到上一个版本
-  */
-  shard_id_t shard_id;  
-  /*用于标识对象所在的osd在纠删码(EC)类型的PG中的序号,
-  **对应EC来说，每个osd在PG中的序号在数据恢复时非常关键;
-  **如果是副本Replicate类型的PG,该字段设置为NO_SHARD(-1),即该字段对于副本集无意义
-  */
+  shard_id_t shard_id;
   bool max;
 
 public:
