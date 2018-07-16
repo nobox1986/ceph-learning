@@ -453,6 +453,10 @@ private:
   
   set<WorkThread*> _threads;  //线程池中的工作队列
   list<WorkThread*> _old_threads;  ///< need to be joined 等待进joined操作的线程
+  /* 工作队列集合,保存所有要处理的任务.
+  **一般情况下,一个工作队列对应一个类型的处理任务，一个线程池对应一个工作队列,专门用于处理该类型任务 
+  **如果是后台任务,又不紧急,就可以将多个工作队列放置到一个线程池中,该线程池可以处理不同类型的任务.
+  */
   int processing;
 
   void start_threads();
