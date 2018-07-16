@@ -519,6 +519,7 @@ public:
 
   /// start thread pool thread
   void start();
+  /*线程池启动,在加锁的情况下,调用start_threads,该函数检查当前线程数,如果小于配置的线程池,就创建新的工作线程*/
   /// stop thread pool thread
   void stop(bool clear_after=true);
   /// pause thread pool (if it not already paused)
