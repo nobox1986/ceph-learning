@@ -1,28 +1,31 @@
----- md_config_obs_t Matches (27 in 20 files) ----
-BlueStore in BlueStore.h (src\os\bluestore) : 		  public md_config_obs_t {
-ceph_context.h (src\common) line 36 : class md_config_obs_t;
-CephContext in ceph_context.h (src\common) :   md_config_obs_t *_log_obs;
-CephContext in ceph_context.h (src\common) :   md_config_obs_t *_perf_counters_conf_obs;
-CephContext in ceph_context.h (src\common) :   md_config_obs_t *_lockdep_obs;
-Client.h (src\client) line 250 : class Client : public Dispatcher, public md_config_obs_t {
-md_config_t in config.h (src\common) :   typedef std::multimap <std::string, md_config_obs_t*> obs_map_t;
-md_config_t in config.h (src\common) :   void add_observer(md_config_obs_t* observer_);
-md_config_t in config.h (src\common) :   void remove_observer(md_config_obs_t* observer_);
-md_config_cacher_t in config_cacher.h (src\common) : class md_config_cacher_t : public md_config_obs_t {
-config_obs.h (src\common) line 29 : class md_config_obs_t {
-DaemonServer.h (src\mgr) line 45 : class DaemonServer : public Dispatcher, public md_config_obs_t
-FDCache.h (src\os\filestore) line 31 : class FDCache : public md_config_obs_t {
-FDCache in FDCache.h (src\os\filestore) :   /// md_config_obs_t
-FileJournal in FileJournal.h (src\os\filestore) :   public md_config_obs_t {
-FileStore in FileStore.h (src\os\filestore) :                   public md_config_obs_t
-rbd::mirror::ImageSyncThrottler in ImageSyncThrottler.h (src\tools\rbd_mirror) : class ImageSyncThrottler : public md_config_obs_t {
-LogMonitor in LogMonitor.h (src\mon) :                    public md_config_obs_t {
-MDSDaemon.h (src\mds) line 39 : class MDSDaemon : public Dispatcher, public md_config_obs_t {
-MgrStandby in MgrStandby.h (src\mgr) : 		   public md_config_obs_t {
-Monitor in Monitor.h (src\mon) :                 public md_config_obs_t {
-Objecter.h (src\osdc) line 1199 : class Objecter : public md_config_obs_t, public Dispatcher {
-OSD in OSD.h (src\osd) : 	    public md_config_obs_t {
-TracepointProvider.h (src\common) line 13 : class TracepointProvider : public md_config_obs_t, boost::noncopyable {
-WBThrottle.h (src\os\filestore) line 45 : class WBThrottle : Thread, public md_config_obs_t {
-WBThrottle in WBThrottle.h (src\os\filestore) :   /// md_config_obs_t
-WorkQueue.h (src\common) line 27 : class ThreadPool : public md_config_obs_t {
+---- WorkQueue Matches (30 in 16 files) ----
+CMakeLists.txt (src) line 442 :   common/WorkQueue.cc
+v0.48.1argonaut.txt (doc\changelog) line 397 :     	src/common/WorkQueue.h
+v0.56.2.txt (doc\changelog) line 272 :     WorkQueue: add TPHandle to allow _process to ping the hb map
+v0.67.10.txt (doc\changelog) line 474 :     common/WorkQueue: allow io priority to be set for wq
+v0.67.10.txt (doc\changelog) line 480 :     	src/common/WorkQueue.cc
+v0.80.10.txt (doc\changelog) line 1138 :     WorkQueue: make wait timeout on empty queue configurable
+v0.80.10.txt (doc\changelog) line 1795 :     WorkQueue: make wait timeout on empty queue configurable
+v0.80.11.txt (doc\changelog) line 893 :     WorkQueue: add/remove_work_queue methods now thread safe
+v0.80.11.txt (doc\changelog) line 2037 :     WorkQueue: added virtual destructor
+v0.80.11.txt (doc\changelog) line 2046 :     WorkQueue: add new ContextWQ work queue
+v0.80.11.txt (doc\changelog) line 2055 :     	src/common/WorkQueue.h: trivial resolution
+v0.80.6.txt (doc\changelog) line 1437 :     common/WorkQueue: allow io priority to be set for wq
+v0.80.6.txt (doc\changelog) line 1444 : 	src/common/WorkQueue.cc
+v0.87.2.txt (doc\changelog) line 343 :     WorkQueue: make timeout when calling WaitInterval configurable
+v0.87.2.txt (doc\changelog) line 809 :     WorkQueue: make wait timeout on empty queue configurable
+v0.94.3.txt (doc\changelog) line 2524 :     WorkQueue: added virtual destructor
+v0.94.3.txt (doc\changelog) line 2533 :     WorkQueue: add new ContextWQ work queue
+v0.94.4.txt (doc\changelog) line 926 :     rest-bench common/WorkQueue.cc: 54: FAILED assert(_threads.empty())
+v0.94.4.txt (doc\changelog) line 3047 :     WorkQueue: ContextWQ can now accept a return code
+v0.94.6.txt (doc\changelog) line 1938 :     WorkQueue: new PointerWQ base class for ContextWQ
+v0.94.6.txt (doc\changelog) line 1949 :     	src/common/WorkQueue.h
+v0.94.6.txt (doc\changelog) line 3872 :     WorkQueue: add/remove_work_queue methods now thread safe
+v0.94.7.txt (doc\changelog) line 2830 :     WorkQueue: PointerWQ drain no longer waits for other queues
+v10.2.10.txt (doc\changelog) line 1341 :             src/common/WorkQueue.h: trivial resolution
+v10.2.8.txt (doc\changelog) line 4010 :     librbd: Include WorkQueue.h since we use it
+v10.2.8.txt (doc\changelog) line 4013 :     do not include common/WorkQueue.h that defines ContextWQ. This results
+v11.2.1.txt (doc\changelog) line 6499 :     librbd: Include WorkQueue.h since we use it
+v11.2.1.txt (doc\changelog) line 6502 :     do not include common/WorkQueue.h that defines ContextWQ. This results
+v9.2.1.txt (doc\changelog) line 66 :     WorkQueue: PointerWQ drain no longer waits for other queues
+v9.2.1.txt (doc\changelog) line 1473 :     WorkQueue: new PointerWQ base class for ContextWQ
