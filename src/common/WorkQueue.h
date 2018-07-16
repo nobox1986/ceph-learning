@@ -24,6 +24,7 @@
 class CephContext;
 
 /// Pool of threads that share work submitted to multiple work queues.
+/* 线程池的实现主要包括:线程池的启动过程,线程池对应的工作队列的管理,线程池对应的执行函数如何执行任务 */
 class ThreadPool : public md_config_obs_t {
   CephContext *cct;
   string name;  //线程池名称
