@@ -263,13 +263,20 @@ public:
    * will automatically add itself to the thread pool on construction and remove itself on
    * destruction. */
   template<class T>
+  /* 工作队列定义了线程池要处理的任务
+  **任务类型在模板参数中指定,在构造函数里,就把自己加入到线程池的工作队列集合中
+  **WorkQueue实现了部分功能:进队、出队和加锁,并且通过条件变量通知相应的处理线程
+  */
   class WorkQueue : public WorkQueue_ {
     ThreadPool *pool;
     
     /// Add a work item to the queue.
-    virtual bool _enqueue(T *) = 0;
+    virtual bool _enqueue(T *) = 0;  //从提交的任务中去除一个项
+	/* 还有需要使用者自己定义的功能
+	**需要自己定时实现保存任务的容器.添加和删除的方法,以及如何处理任务的方法
+	*/
     /// Dequeue a previously submitted work item.
-    virtual void _dequeue(T *) = 0;
+    virtual void _dequeue(T *) = 0;  //去除一个项目并返回原始指针
     /// Dequeue a work item and return the original submitted pointer.
     virtual T *_dequeue() = 0;
     virtual void _process_finish(T *) {}
