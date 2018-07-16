@@ -1,1 +1,28 @@
----- crc_map Matches (0 in 0 files) ----
+---- md_config_obs_t Matches (27 in 20 files) ----
+BlueStore in BlueStore.h (src\os\bluestore) : 		  public md_config_obs_t {
+ceph_context.h (src\common) line 36 : class md_config_obs_t;
+CephContext in ceph_context.h (src\common) :   md_config_obs_t *_log_obs;
+CephContext in ceph_context.h (src\common) :   md_config_obs_t *_perf_counters_conf_obs;
+CephContext in ceph_context.h (src\common) :   md_config_obs_t *_lockdep_obs;
+Client.h (src\client) line 250 : class Client : public Dispatcher, public md_config_obs_t {
+md_config_t in config.h (src\common) :   typedef std::multimap <std::string, md_config_obs_t*> obs_map_t;
+md_config_t in config.h (src\common) :   void add_observer(md_config_obs_t* observer_);
+md_config_t in config.h (src\common) :   void remove_observer(md_config_obs_t* observer_);
+md_config_cacher_t in config_cacher.h (src\common) : class md_config_cacher_t : public md_config_obs_t {
+config_obs.h (src\common) line 29 : class md_config_obs_t {
+DaemonServer.h (src\mgr) line 45 : class DaemonServer : public Dispatcher, public md_config_obs_t
+FDCache.h (src\os\filestore) line 31 : class FDCache : public md_config_obs_t {
+FDCache in FDCache.h (src\os\filestore) :   /// md_config_obs_t
+FileJournal in FileJournal.h (src\os\filestore) :   public md_config_obs_t {
+FileStore in FileStore.h (src\os\filestore) :                   public md_config_obs_t
+rbd::mirror::ImageSyncThrottler in ImageSyncThrottler.h (src\tools\rbd_mirror) : class ImageSyncThrottler : public md_config_obs_t {
+LogMonitor in LogMonitor.h (src\mon) :                    public md_config_obs_t {
+MDSDaemon.h (src\mds) line 39 : class MDSDaemon : public Dispatcher, public md_config_obs_t {
+MgrStandby in MgrStandby.h (src\mgr) : 		   public md_config_obs_t {
+Monitor in Monitor.h (src\mon) :                 public md_config_obs_t {
+Objecter.h (src\osdc) line 1199 : class Objecter : public md_config_obs_t, public Dispatcher {
+OSD in OSD.h (src\osd) : 	    public md_config_obs_t {
+TracepointProvider.h (src\common) line 13 : class TracepointProvider : public md_config_obs_t, boost::noncopyable {
+WBThrottle.h (src\os\filestore) line 45 : class WBThrottle : Thread, public md_config_obs_t {
+WBThrottle in WBThrottle.h (src\os\filestore) :   /// md_config_obs_t
+WorkQueue.h (src\common) line 27 : class ThreadPool : public md_config_obs_t {
