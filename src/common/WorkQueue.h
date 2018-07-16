@@ -26,13 +26,13 @@ class CephContext;
 /// Pool of threads that share work submitted to multiple work queues.
 class ThreadPool : public md_config_obs_t {
   CephContext *cct;
-  string name;
-  string thread_name;
-  string lockname;
-  Mutex _lock;
-  Cond _cond;
-  bool _stop;
-  int _pause;
+  string name;  //线程池名称
+  string thread_name;  
+  string lockname;  //锁的名称
+  Mutex _lock;  //线程互斥锁,也是工作队列访问互斥的锁
+  Cond _cond;  //锁对应的条件变量
+  bool _stop;  //线程锁是否停止的标志
+  int _pause;  //暂时中止线程池的标志
   int _draining;
   Cond _wait_cond;
   int ioprio_class, ioprio_priority;
@@ -435,8 +435,8 @@ public:
     uint32_t m_processing;
   };
 private:
-  vector<WorkQueue_*> work_queues;
-  int next_work_queue = 0;
+  vector<WorkQueue_*> work_queues;  //工作队列
+  int next_work_queue = 0;  //下一个访问的工作队列
  
 
   // threads
@@ -450,8 +450,8 @@ private:
     }
   };
   
-  set<WorkThread*> _threads;
-  list<WorkThread*> _old_threads;  ///< need to be joined
+  set<WorkThread*> _threads;  //线程池中的工作队列
+  list<WorkThread*> _old_threads;  ///< need to be joined 等待进joined操作的线程
   int processing;
 
   void start_threads();
