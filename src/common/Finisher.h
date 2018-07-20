@@ -34,6 +34,7 @@ enum {
  * representing callbacks, in a dedicated worker thread. Enqueuing
  * contexts to complete is thread-safe.
  */
+ /* 类Finisher用来完成回调函数Context的执行,其内部有一个FinisherThread线程来执行Context回调函数 */
 class Finisher {
   CephContext *cct;
   Mutex        finisher_lock; ///< Protects access to queues and finisher_running.
@@ -44,7 +45,7 @@ class Finisher {
   bool	       finisher_empty_wait; ///< True mean someone wait finisher empty.
 
   /// Queue for contexts for which complete(0) will be called.
-  vector<pair<Context*,int>> finisher_queue;
+  vector<pair<Context*,int>> finisher_queue;  //需要执行的Context,成功返回0
 
   string thread_name;
 
