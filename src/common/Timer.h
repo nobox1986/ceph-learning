@@ -22,22 +22,24 @@ class CephContext;
 class Context;
 class SafeTimerThread;
 
+/* 类SafeTimer实现了定时器的功能 */
 class SafeTimer
 {
   CephContext *cct;
   Mutex& lock;
   Cond cond;
-  bool safe_callbacks;
+  bool safe_callbacks;  //是否是safe_callback
 
-  friend class SafeTimerThread;
+  friend class SafeTimerThread;  //定时器执行线程
   SafeTimerThread *thread;
 
-  void timer_thread();
+  void timer_thread();    //定时器任务执行
   void _shutdown();
 
-  std::multimap<utime_t, Context*> schedule;
+  std::multimap<utime_t, Context*> schedule;  //目标时间和定时任务执行函数Context
   std::map<Context*, std::multimap<utime_t, Context*>::iterator> events;
-  bool stopping;
+  //定时任务<-->定时任务在schedule中的位置映射
+  bool stopping;  //是否停止
 
   void dump(const char *caller = 0) const;
 
@@ -71,7 +73,7 @@ public:
   /* Schedule an event in the future
    * Call with the event_lock LOCKED */
   Context* add_event_after(double seconds, Context *callback);
-  Context* add_event_at(utime_t when, Context *callback);
+  Context* add_event_at(utime_t when, Context *callback);  //添加定时器人去
 
   /* Cancel an event.
    * Call with the event_lock LOCKED
@@ -79,7 +81,7 @@ public:
    * Returns true if the callback was cancelled.
    * Returns false if you never addded the callback in the first place.
    */
-  bool cancel_event(Context *callback);
+  bool cancel_event(Context *callback);    //取消定时器任务
 
   /* Cancel all events.
    * Call with the event_lock LOCKED
