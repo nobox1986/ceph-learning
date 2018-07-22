@@ -144,24 +144,24 @@ struct ceph_msg_header_old {
 } __attribute__ ((packed));
 
 struct ceph_msg_header {
-	__le64 seq;       /* message seq# for this session */
-	__le64 tid;       /* transaction id */
-	__le16 type;      /* message type */
-	__le16 priority;  /* priority.  higher value == higher priority */
-	__le16 version;   /* version of message encoding */
+	__le64 seq;       /* message seq# for this session 当前session内消息的唯一序号*/
+	__le64 tid;       /* transaction id 消息全局唯一的id*/
+	__le16 type;      /* message type 消息类型*/
+	__le16 priority;  /* priority.  higher value == higher priority 优先级*/
+	__le16 version;   /* version of message encoding 消息编码的版本*/
 
-	__le32 front_len; /* bytes in main payload */
-	__le32 middle_len;/* bytes in middle payload */
-	__le32 data_len;  /* bytes of data payload */
-	__le16 data_off;  /* sender: include full offset;
+	__le32 front_len; /* bytes in main payload --payload的长度*/
+	__le32 middle_len;/* bytes in middle payload --middle的长度*/
+	__le32 data_len;  /* bytes of data payload --data的长度*/
+	__le16 data_off;  /* sender: include full offset; 对象的数据偏移量
 			     receiver: mask against ~PAGE_MASK */
 
-	struct ceph_entity_name src;
+	struct ceph_entity_name src;  //消息源
 
-	/* oldest code we think can decode this.  unknown if zero. */
+	/* oldest code we think can decode this.  unknown if zero. 一些旧的代码，用于兼容，如果为零则忽略*/
 	__le16 compat_version;
 	__le16 reserved;
-	__le32 crc;       /* header crc32c */
+	__le32 crc;       /* header crc32c 消息头的crc校验信息*/
 } __attribute__ ((packed));
 
 #define CEPH_MSG_PRIO_LOW     64
