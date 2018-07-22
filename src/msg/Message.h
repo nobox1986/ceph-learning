@@ -224,24 +224,26 @@ namespace bi = boost::intrusive;
 // XioMessenger diagnostic "ping pong" flag (resend msg when send completes)
 #define MSG_MAGIC_REDUPE       0x0100
 
+/* 类Message是所有消息的基类,任何要发送的消息,都要继承该类 */
 class Message : public RefCountedObject {
 protected:
-  ceph_msg_header  header;      // headerelope
-  ceph_msg_footer  footer;
+  ceph_msg_header  header;      // headerelope 消息头
+  ceph_msg_footer  footer;      //消息尾
+  //用户数据
   bufferlist       payload;  // "front" unaligned blob
   bufferlist       middle;   // "middle" unaligned blob
   bufferlist       data;     // data payload (page-alignment will be preserved where possible)
 
   /* recv_stamp is set when the Messenger starts reading the
    * Message off the wire */
-  utime_t recv_stamp;
+  utime_t recv_stamp;  //开始接收数据的时间戳
   /* dispatch_stamp is set when the Messenger starts calling dispatch() on
    * its endpoints */
-  utime_t dispatch_stamp;
+  utime_t dispatch_stamp;  //dispatch的时间戳
   /* throttle_stamp is the point at which we got throttle */
-  utime_t throttle_stamp;
+  utime_t throttle_stamp;  //获取throttle的slot的时间戳
   /* time at which message was fully read */
-  utime_t recv_complete_stamp;
+  utime_t recv_complete_stamp;  //接收完成的时间戳
 
   ConnectionRef connection;
 
