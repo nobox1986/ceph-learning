@@ -89,6 +89,7 @@ public:
    * @param m A message which has been received
    */
   virtual void ms_fast_preprocess(Message *m) {}
+  //消息分发接口
   /**
    * The Messenger calls this function to deliver a single message.
    *
@@ -96,6 +97,10 @@ public:
    * are given a single reference count on it.
    */
   virtual bool ms_dispatch(Message *m) = 0;
+  // 消息分发接口
+  /* Server端注册该Dispatcher类用于把接收到的Message请求分发给具体处理的应用层
+  ** Client端需要实现一个Dispatcher函数,用于处理收到的ACK应对消息
+  */
 
   /**
    * This function will be called whenever a Connection is newly-created
