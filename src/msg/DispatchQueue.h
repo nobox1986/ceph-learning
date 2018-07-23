@@ -36,6 +36,7 @@ struct Connection;
  * and permitted to deliver in a round-robin fashion.
  * See Messenger::dispatch_entry for details.
  */
+ /* 类DispatchQueue用于把接收到的请求保存在内部,通过其内部的线程,调用SimpleMessenger类注册的Dispatch类的处理函数来处理相应的消息 */
 class DispatchQueue {
   class QueueItem {
     int type;
@@ -66,10 +67,12 @@ class DispatchQueue {
   mutable Mutex lock;
   Cond cond;
 
-  PrioritizedQueue<QueueItem, uint64_t> mqueue;
+  PrioritizedQueue<QueueItem, uint64_t> mqueue;  //接收消息的优先队列
 
   set<pair<double, Message*> > marrival;
+  //接收到消息集合pair为(recv_time,message)
   map<Message *, set<pair<double, Message*> >::iterator> marrival_map;
+  //消息-->所在集合位置的映射
   void add_arrival(Message *m) {
     marrival_map.insert(
       make_pair(
