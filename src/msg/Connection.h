@@ -38,20 +38,24 @@
 class Message;
 class Messenger;
 
+/* 类Connection对应端port对端的socket连接的封装 */
 struct Connection : public RefCountedObject {
-  mutable Mutex lock;
+  mutable Mutex lock;  //互斥锁
   Messenger *msgr;
-  RefCountedObject *priv;
-  int peer_type;
-  entity_addr_t peer_addr;
+  RefCountedObject *priv;  //连接的私有数据
+  int peer_type;  //连接的peer类型
+  entity_addr_t peer_addr;  //peer地址
   utime_t last_keepalive, last_keepalive_ack;
+  //最后一次发送keepalive的时间和最后一次接收keeplive的ACK的时间
 private:
-  uint64_t features;
+  uint64_t features;  //feature标志位
 public:
   bool failed; // true if we are a lossy connection that has failed.
 
   int rx_buffers_version;
-  map<ceph_tid_t,pair<bufferlist,int> > rx_buffers;
+  map<ceph_tid_t,pair<bufferlist,int> > rx_buffers;  
+  //接收缓冲区
+  //消息的标识ceph_tid-->(buffer,rx_buffers_version)的映射
 
   friend class boost::intrusive_ptr<Connection>;
   friend class PipeConnection;
