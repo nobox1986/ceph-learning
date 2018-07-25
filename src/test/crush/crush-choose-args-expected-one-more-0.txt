@@ -24,7 +24,9 @@ type 7 room
 type 8 datacenter
 type 9 region
 type 10 root
-
+//层级化的Cluster Map基本概念：
+//device：最基本的存储设备,也就是OSD,一个OSD对应一个磁盘存储设备
+//bucket：设备的容器,可以递归的包含多个设备或者子类的bucket
 # buckets  
 host HOST {                                    //类型host,名字为HOST
 	id -2		# do not change unnecessarily  //bucket的id,一般为负值
