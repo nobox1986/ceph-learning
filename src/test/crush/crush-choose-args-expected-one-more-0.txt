@@ -25,13 +25,14 @@ type 8 datacenter
 type 9 region
 type 10 root
 
-# buckets
-host HOST {
-	id -2		# do not change unnecessarily
-	# weight 6.000
-	alg straw2
-	hash 0	# rjenkins1
-	item osd.0 weight 3.000
+# buckets  
+host HOST {                                    //类型host,名字为HOST
+	id -2		# do not change unnecessarily  //bucket的id,一般为负值
+	# weight 6.000                             //权重,默认为子item的权重之和
+	alg straw2                                 //bucket随机选择的算法
+	hash 0	# rjenkins1                        
+	//bucket随机选择的算法使用的hash函数,这里0代表使用hash函数jenkinsl
+	item osd.0 weight 3.000                    //item1:osd.1和权重值
 	item osd.1 weight 3.000
 }
 root default {
