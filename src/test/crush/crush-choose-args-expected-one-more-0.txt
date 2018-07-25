@@ -35,11 +35,11 @@ host HOST {                                    //类型host,名字为HOST
 	item osd.0 weight 3.000                    //item1:osd.1和权重值
 	item osd.1 weight 3.000
 }
-root default {
-	id -1		# do not change unnecessarily
+root default {                                 //root类型的bucket,名字为default
+	id -1		# do not change unnecessarily  //id号
 	# weight 6.000
-	alg straw2
-	hash 0	# rjenkins1
+	alg straw2                                 //随机选择的算法
+	hash 0	# rjenkins1                             
 	item HOST weight 6.000
 }
 
