@@ -435,9 +435,10 @@ rule myrule1 {
 	min_size 1
 	max_size 10
 	step take root
-	step choose firstn 2 type rack
-	step chooseleaf indep 1 type host
-	step emit
+	step choose firstn 2 type rack      //choose firstn深度优先选择出num个类型为bucket-type个的子bucket
+	step chooseleaf indep 1 type host   
+	//chooseleaf先选择出num个类型为bucket-type的子bucket,然后递归到页节点,选择一个osd设备
+	step emit  //输出结果
 }
 
 # end crush map
