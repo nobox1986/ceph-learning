@@ -351,6 +351,7 @@ struct crush_bucket_straw2 {
  * map an integer to items with the crush_do_rule() function.
  *
  */
+ /* 定义了静态所有Cluster Map的bucket,bucket为动态申请的二维数组,保存了所有bucket的数据结构 */
 struct crush_map {
         /*! An array of crush_bucket pointers of size __max_buckets__.
          * An element of the array may be NULL if the bucket was removed with
