@@ -896,6 +896,8 @@ void crush_init_workspace(const struct crush_map *m, void *v) {
  * @weight: weight vector (for map leaves)  所有osd的权重,通过它来判断osd是否out
  * @weight_max: size of weight vector  所有osd数量
  * @cwin: Pointer to at least map->working_size bytes of memory or NULL.
+ * 功能:crush_do_rule根据step的数量,循环调用相关的函数选择bucket,如果是深度优先,就调用crush_choose_firstn
+ *      如果是广度优先,就调用函数crush_choose_indep来选择
  */
 int crush_do_rule(const struct crush_map *map,
 		  int ruleno, int x, int *result, int result_max,
