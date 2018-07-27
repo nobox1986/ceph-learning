@@ -68,7 +68,7 @@ bool librados::RadosClient::ms_get_authorizer(int dest_type,
 librados::RadosClient::RadosClient(CephContext *cct_)
   : Dispatcher(cct_->get()),
     cct_deleter{cct_, [](CephContext *p) {p->put();}},
-    conf(cct_->_conf),
+    conf(cct_->_conf),  //配置文件
     state(DISCONNECTED),
     monclient(cct_),
     mgrclient(cct_, nullptr),
