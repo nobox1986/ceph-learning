@@ -43,19 +43,19 @@ class librados::RadosClient : public Dispatcher
 
 public:
   using Dispatcher::cct;
-  md_config_t *conf;
+  md_config_t *conf;  //配置文件
 private:
   enum {
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
-  } state;
+  } state;  //和Monitor的网络连接状态
 
   MonClient monclient;
   MgrClient mgrclient;
-  Messenger *messenger;
+  Messenger *messenger;  //网络消息接口
 
-  uint64_t instance_id;
+  uint64_t instance_id;  //rados客户端id
 
   bool _dispatch(Message *m);
   bool ms_dispatch(Message *m) override;
@@ -66,7 +66,7 @@ private:
   void ms_handle_remote_reset(Connection *con) override;
   bool ms_handle_refused(Connection *con) override;
 
-  Objecter *objecter;
+  Objecter *objecter;  //对象指针
 
   Mutex lock;
   Cond cond;
