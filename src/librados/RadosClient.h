@@ -70,8 +70,8 @@ private:
 
   Mutex lock;
   Cond cond;
-  SafeTimer timer;
-  int refcnt;
+  SafeTimer timer;  //定时器
+  int refcnt;  //引用计算
 
   version_t log_last_version;
   rados_log_callback_t log_cb;
