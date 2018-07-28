@@ -508,7 +508,7 @@ namespace std {
 
 struct spg_t {
   pg_t pgid;
-  shard_id_t shard;
+  shard_id_t shard;  //结构体spg_t是在pg_t基础上加了一个shard_id字段,代表了该PG所在的OSD在对应的OSD列表中的序号
   spg_t() : shard(shard_id_t::NO_SHARD) {}
   spg_t(pg_t pgid, shard_id_t shard) : pgid(pgid), shard(shard) {}
   explicit spg_t(pg_t pgid) : pgid(pgid), shard(shard_id_t::NO_SHARD) {}
